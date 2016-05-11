@@ -63,12 +63,13 @@ class PdfView extends View {
             case 'stream':
                 return $this->pdf->output();
 
-			case 'upload':
+	    case 'upload':
                 $output = $this->pdf->output();
                 if ( ! file_put_contents($this->config['upload_filename'], $output) )
                     return false;
 
-                return $output;
+                return $this->pdf->stream($this->config['filename'],array('Attachment'=>0)); //Fix the built-in render in browser
+
 
 			default: return $this->pdf->stream($this->config['filename']);
 		}
